@@ -1,0 +1,11 @@
+FROM busybox:opkg
+MAINTAINER Darebeat <fengwei2010@126.com>
+
+ADD mongodb-2.6.8 /opt/mongodb
+COPY ./ipks/libstdcpp_5.2.0-1_x86_64.ipk /
+ENV MONGO_HOME /opt/mongodb
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$MONGO_HOME/bin
+RUN opkg-cl install /libstdcpp_5.2.0-1_x86_64.ipk && rm /libstdcpp_5.2.0-1_x86_64.ipk
+
+EXPOSE 27017
+CMD ["/opt/mongodb/bin/mongod.sh"]

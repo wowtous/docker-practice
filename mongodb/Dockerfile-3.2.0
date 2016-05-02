@@ -1,0 +1,15 @@
+FROM busybox:opkg
+MAINTAINER Darebeat <fengwei2010@126.com>
+
+ADD mongodb-3.2.0 /opt/mongodb
+ADD ipks /
+ENV MONGO_HOME /opt/mongodb
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$MONGO_HOME/bin
+
+RUN opkg-cl install /libstdcpp_5.2.0-1_x86_64.ipk \
+    && opkg-cl install /zlib_1.2.8-1_x86_64.ipk \
+    && opkg-cl install /libopenssl_1.0.2e-1_x86_64.ipk \
+    && rm /*.ipk
+
+EXPOSE 27017
+CMD ["/opt/mongodb/bin/mongod.sh"]
